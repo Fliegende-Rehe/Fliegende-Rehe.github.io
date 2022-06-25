@@ -312,8 +312,8 @@ var app = (function () {
     	const block = {
     		c: function create() {
     			h1 = element("h1");
-    			h1.textContent = `Hello ${/*name*/ ctx[0]}!`;
-    			add_location(h1, file, 4, 0, 41);
+    			h1.textContent = `Hello ${name}!`;
+    			add_location(h1, file, 8, 0, 243);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -340,27 +340,25 @@ var app = (function () {
     	return block;
     }
 
+    const api_url = "http://quotes.stormconsultancy.co.uk/random.json";
+
+    async function getQuote() {
+    	const response = await fetch(api_url);
+    	const data = await response.json();
+    	data.quote;
+    }
+
     function instance($$self, $$props, $$invalidate) {
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('App', slots, []);
-    	let name = 'world';
     	const writable_props = [];
 
     	Object.keys($$props).forEach(key => {
     		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<App> was created with unknown prop '${key}'`);
     	});
 
-    	$$self.$capture_state = () => ({ name });
-
-    	$$self.$inject_state = $$props => {
-    		if ('name' in $$props) $$invalidate(0, name = $$props.name);
-    	};
-
-    	if ($$props && "$$inject" in $$props) {
-    		$$self.$inject_state($$props.$$inject);
-    	}
-
-    	return [name];
+    	$$self.$capture_state = () => ({ api_url, getQuote });
+    	return [];
     }
 
     class App extends SvelteComponentDev {
@@ -378,7 +376,7 @@ var app = (function () {
     }
 
     var app = new App({
-    	target: document.body
+        target: document.body
     });
 
     return app;
