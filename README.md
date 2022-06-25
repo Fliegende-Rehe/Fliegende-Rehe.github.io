@@ -1,28 +1,23 @@
-https://github.com/Rich-Harris/degit
+[Project template](https://github.com/Rich-Harris/degit)  
+[Local link](http://localhost:8080/)
 
-```
+Create new project
+```bash
 npx degit sveltejs/template svelte-app
 cd svelte-app
-```
-
-```bash
 npm install
 ```
 
+Build and run 
 ```bash
+npm run build
 npm run dev
 ```
 
-```bash
-npm run build
-```
-
-
+Set up a TypeScript development environment
 ```bash
 node scripts/setupTypeScript.js
 ```
-
-Or remove the script via:
 
 ```bash
 rm scripts/setupTypeScript.js
